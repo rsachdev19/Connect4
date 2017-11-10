@@ -14,7 +14,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -25,7 +24,7 @@ import javax.swing.Timer;
 public class Connect4 extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
     public static void main(String[] args) {
-        Connect4 project = new Connect4("Title");
+        Connect4 project = new Connect4("Connect 4");
     }
 
     public static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -107,12 +106,18 @@ public class Connect4 extends JPanel implements KeyListener, MouseListener, Mous
         }
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
-                if (board[j][i] == 0) {
-                    g.setColor(Color.white);
-                } else if (board[j][i] == 1) {
-                    g.setColor(Color.blue);
-                } else if (board[j][i] == 2) {
-                    g.setColor(Color.red);
+                switch (board[j][i]) {
+                    case 0:
+                        g.setColor(Color.white);
+                        break;
+                    case 1:
+                        g.setColor(Color.blue);
+                        break;
+                    case 2:
+                        g.setColor(Color.red);
+                        break;
+                    default:
+                        break;
                 }
                 g.fillOval(68 + i * 100, 68 + j * 100, 65, 65);
             }
