@@ -12,8 +12,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -50,10 +57,10 @@ public class Connect4 extends JPanel implements KeyListener, MouseListener, Mous
     public int winner;
 
     Timer timer = new Timer(100/*change to vary frequency*/, new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    //what the timer does every run through
-                }
-            });
+        public void actionPerformed(ActionEvent e) {
+            //what the timer does every run through
+        }
+    });
 
     public Connect4(String title) {
 
@@ -159,8 +166,6 @@ public class Connect4 extends JPanel implements KeyListener, MouseListener, Mous
             if (board[i][c] == 0) {
                 rowEmpty = i;
                 placePiece(c, rowEmpty);
-                System.out.println(c);
-                System.out.println(rowEmpty);
                 break;
             }
         }
@@ -179,6 +184,25 @@ public class Connect4 extends JPanel implements KeyListener, MouseListener, Mous
                 playerTwoTurn = false;
                 playerOneTurn = true;
             }
+            playDropSound();
+        }
+    }
+
+    /**
+     * Play a sound for when a player's piece is dropped
+     *
+     */
+    public void playDropSound() {
+        try {
+            // Open an audio input stream.
+            URL url = this.getClass().getResource("sounds/drop.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            // Open audio clip and load samples from the audio input stream.
+            // Get a sound clip resource.
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
         }
     }
 
